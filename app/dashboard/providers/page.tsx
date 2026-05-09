@@ -58,8 +58,8 @@ export default function ProvidersPage() {
             {!loading && filtered.length === 0 && <tr><td colSpan={6} className="text-center py-8 text-gray-400">No providers found</td></tr>}
             {filtered.map((p) => (
               <tr key={p.id} className="border-b border-gray-100 hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">{p.user.name}</td>
-                <td className="px-4 py-3 text-gray-600">{p.skills.join(', ')}</td>
+                <td className="px-4 py-3 font-medium text-gray-900">{p.user.name}</td>
+                <td className="px-4 py-3 text-gray-600">{p.skills ? p.skills.join(', ') : p.skill}</td>
                 <td className="px-4 py-3 text-gray-600">{p.city}</td>
                 <td className="px-4 py-3 text-gray-600">Rs. {p.hourlyRate}</td>
                 <td className="px-4 py-3">

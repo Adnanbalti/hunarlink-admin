@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -8,19 +9,21 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setLoading(true);
     setError('');
 
-    setTimeout(() => {
-      if (credentials.username === 'admin' && credentials.password === 'hunarlink123') {
-        document.cookie = 'admin_token=admin-logged-in; path=/';
-        router.push('/dashboard');
-      } else {
-        setError('Invalid username or password');
-      }
+    try {
+      const res = await api.post('/auth/admin/login', credentials);
+      const token = res.data.data.token;
+      document.cookie = `admin_token=${token}; path=/`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      router.push('/dashboard');
+    } catch (err) {
+      setError('Invalid username or password');
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   return (
@@ -39,7 +42,7 @@ export default function LoginPage() {
               value={credentials.username}
               onChange={e => setCredentials({ ...credentials, username: e.target.value })}
               placeholder="admin"
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-gray-400"
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-gray-400 text-gray-900 placeholder:text-gray-300"
             />
           </div>
 
@@ -51,7 +54,7 @@ export default function LoginPage() {
               onChange={e => setCredentials({ ...credentials, password: e.target.value })}
               placeholder="••••••••"
               onKeyDown={e => e.key === 'Enter' && handleLogin()}
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-gray-400"
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-gray-400 text-gray-900 placeholder:text-gray-300"
             />
           </div>
 
@@ -67,8 +70,8 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <p className="text-xs text-gray-400 mt-6 text-center">
-          username: admin · password: hunarlink123
+        <p className="text-xs text-gray-500 mt-6 text-center">
+          username: <span className="font-medium text-gray-700">admin</span> · password: <span className="font-medium text-gray-700">hunarlink123</span>
         </p>
       </div>
     </div>

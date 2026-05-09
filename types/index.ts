@@ -10,7 +10,8 @@ export interface User {
 export interface Provider {
   id: string;
   user: User;
-  skills: string[];
+  skill: string;        
+  skills?: string[];    
   city: string;
   hourlyRate: number;
   bio: string;

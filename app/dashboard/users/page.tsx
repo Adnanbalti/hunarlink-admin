@@ -32,7 +32,7 @@ export default function UsersPage() {
             {!loading && users.length === 0 && <tr><td colSpan={5} className="text-center py-8 text-gray-400">No users found</td></tr>}
             {users.map((u) => (
               <tr key={u.id} className="border-b border-gray-100 hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">{u.name}</td>
+                <td className="px-4 py-3 font-medium text-gray-900">{u.name}</td>
                 <td className="px-4 py-3 text-gray-600">{u.phone}</td>
                 <td className="px-4 py-3">
                   <span className={`text-xs px-2 py-1 rounded-full font-medium ${u.role === 'PROVIDER' ? 'bg-blue-50 text-blue-700' : 'bg-gray-100 text-gray-600'}`}>

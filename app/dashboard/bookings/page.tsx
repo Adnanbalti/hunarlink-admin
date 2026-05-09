@@ -62,7 +62,8 @@ export default function BookingsPage() {
             {!loading && filtered.length === 0 && <tr><td colSpan={5} className="text-center py-8 text-gray-400">No bookings found</td></tr>}
             {filtered.map((b) => (
               <tr key={b.id} className="border-b border-gray-100 hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">{b.consumer.name}</td>
+                {/* <td className="px-4 py-3 font-medium">{b.consumer.name}</td> */}
+                <td className="px-4 py-3 font-medium text-gray-900">{b.consumer.name}</td>
                 <td className="px-4 py-3 text-gray-600">{b.provider.user.name}</td>
                 <td className="px-4 py-3 text-gray-600">
                   {new Date(b.scheduledAt).toLocaleDateString('en-PK')}
